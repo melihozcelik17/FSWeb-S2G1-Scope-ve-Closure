@@ -64,12 +64,16 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+  
+  let score =  Math.floor(Math.random() * (16)) + 10;
+  
+  return score 
+  
 }
 
 
-
+console.log("görev 2" ,takimSkoru() )
 
 /* Görev 3: macSonucu() 
 Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
@@ -86,13 +90,24 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(callback,periyot){
+  let evSahibi = 0;
+  let konukTakim = 0;
+  
+  for(let i = 1 ; i <= periyot ; i++){
+    evSahibi = evSahibi + callback();
+    konukTakim = konukTakim + callback();
+  }
+  const result = {
+  "EvSahibi": evSahibi,
+  "KonukTakim": konukTakim
+  }
+
+return result
 }
 
 
-
-
+console.log("görev 3", macSonucu(takimSkoru, 4))
 
 
 /* Zorlayıcı Görev 4: periyotSkoru()
@@ -109,11 +124,16 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function periyotSkoru(takimSkoru) {
+  let result ={
+  "EvSahibi": takimSkoru(),
+  "KonukTakim": takimSkoru()
+  }
+
+  return result
 
 }
-
+console.log("görev 4" , periyotSkoru(takimSkoru))
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
 Aşağıdaki skorTabelasi() fonksiyonunu kullanarak aşağıdakileri yapınız:
@@ -146,10 +166,32 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function skorTabelasi(periyotSkoru,takimSkoru,periyot) {
+  const result = [];
+  let evSahibi = 0 ;
+  let konukTakim = 0 ;
+  for(let i = 1; i<=periyot; i++){
+    let periyotSonuc = periyotSkoru (takimSkoru);
+    evSahibi += periyotSonuc.evSahibi;
+    konukTakim += periyotSonuc.konukTakim;
+    const metin =`${i}.Uzatma: Ev Sahibi ${periyotSonuc.evSahibi} - Konuk Takım ${periyotSonuc.konukTakim} `;
+    result.push(metin)
+  }
+  let i = 1
+while(evSahibi==konukTakim){
+  let periyotSonuc = periyotSkoru (takimSkoru);
+    evSahibi += periyotSonuc.evSahibi;
+    konukTakim += periyotSonuc.konukTakim;
+    const metin =`${i}.periyot: Ev Sahibi ${periyotSonuc.evSahibi} - Konuk Takım ${periyotSonuc.konukTakim} `;
+    result.push(metin)
+    i++;
 }
 
+  const macSonucu =`Maç Sonucu: Ev Sahibi ${evSahibi} - Konuk Takım ${konukTakim} `;
+  result.push(macSonucu);
+  return result
+}
+console.log("soru 5 ",skorTabelasi(periyotSkoru,takimSkoru,4))
 
 
 
